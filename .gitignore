@@ -130,3 +130,7 @@ dmypy.json
 
 # Исключаем файлы IDE
 .idea/
+
+# Исключаем файлы static
+.static/
+
