@@ -1,17 +1,33 @@
 from django.contrib import admin
 
-from .models import Post
+from .models import Comment, Group, Follow, Post
 
 
+EMPTY_VALUE = '-пусто-'
+
+
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    # перечисляем поля, которые должны отображаться в админке
-    list_display = ("text", "pub_date", "author")
-    # добавляем интерфейс для поиска по тексту постов
-    search_fields = ("text",)
-    # добавляем возможность фильтрации по дате
-    list_filter = ("pub_date",)
-    empty_value_display = "-пусто-" # это свойство сработает для всех колонок: где пусто - там будет эта строка
+    """Represents the model Post in admin interface."""
+    list_display = ('pk', 'text', 'pub_date', 'author', 'group')
+    search_fields = ('text',)
+    list_filter = ('pub_date',)
+    empty_value_display = EMPTY_VALUE
 
 
-# при регистрации модели Post источником конфигурации для неё назначаем класс PostAdmin
-admin.site.register(Post, PostAdmin)
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    """Represents the model Group in admin interface."""
+    list_display = ('pk', 'title', 'slug', 'description')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    """Represents the model Comment in admin interface."""
+    list_display = ('pk', 'text', 'author', 'post', 'created')
+
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    """Represents the model Follow in admin interface."""
+    list_display = ('pk', 'user', 'author')
